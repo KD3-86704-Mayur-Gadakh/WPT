@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Car</title>
+    <link rel="stylesheet" href="democar.css">
+</head>
+
+<body>
+
+    <!-- Car Image -->
+    <div id="container">
+        <img id="car" src="newCarImg.png" alt="Car">
+    </div>
+
+    <!-- Road -->
+    <div id="road"></div>
+
+    <!-- Input Fields and Buttons -->
+    <div>
+        <label for="xAxis">X Axis :</label>
+        <input type="text" id="xAxis" value="0">
+
+        <label for="yAxis">Y Axis :</label>
+        <input type="text" id="yAxis" value="0">
+
+        <button id="startBtn">START</button>
+        <button id="stopBtn">STOP</button>
+    </div>
+
+    <script>
+
+        let car = document.getElementById('car');
+        let xInput = document.getElementById('xAxis');
+        let yInput = document.getElementById('yAxis');
+        let startBtn = document.getElementById('startBtn');
+        let stopBtn = document.getElementById('stopBtn');
+
+        let intervalX, intervalY;
+        let xPos = 0;
+        let yPos = 0;
+
+        startBtn.addEventListener('click', function () {
+            clearInterval(intervalX);
+            clearInterval(intervalY);
+
+            intervalX = setInterval(() => {
+                if (xPos < 400) {
+                    xPos += 5;
+                    car.style.left = xPos + 'px';
+                    xInput.value = xPos;
+                } else {
+                    clearInterval(intervalX);
+                    intervalY = setInterval(() => {
+                        if (yPos < 150) {
+                            yPos += 5;
+                            car.style.top = yPos + 'px';
+                            yInput.value = yPos;
+                        } else {
+                            alert('Accident Happened :( Call Ambulance :)!');
+                            clearInterval(intervalY);
+                        }
+                    }, 100);
+                }
+            }, 100);
+        });
+
+        stopBtn.addEventListener('click', function () {
+            clearInterval(intervalX);
+            clearInterval(intervalY);
+        });
+
+    </script>
+</body>
+
+</html>
